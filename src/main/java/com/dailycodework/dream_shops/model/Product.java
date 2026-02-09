@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+
 @Entity //This class will represent a table in database
 public class Product {
     @Id
@@ -36,4 +36,13 @@ public class Product {
     //A convenience setting that propagates all standard persistence operations from a parent entity to its associated child entities
     private List<image> images;
 
+    public Product(String name, String brand, BigDecimal price, int inventory, String description, Category category) {
+     this.name = name;
+     this.brand = brand;
+     this.price = price;
+     this.inventory = inventory;
+     this.description = description;
+     this.category = category;
+
+    }
 }
