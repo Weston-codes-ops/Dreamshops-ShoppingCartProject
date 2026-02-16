@@ -1,6 +1,7 @@
 package com.dailycodework.dream_shops.Services;
 
 import com.dailycodework.dream_shops.exceptions.ProductNotFoundException;
+import com.dailycodework.dream_shops.exceptions.ResourceNotFoundException;
 import com.dailycodework.dream_shops.interfaces.ProductInterface;
 import com.dailycodework.dream_shops.model.Category;
 import com.dailycodework.dream_shops.model.Product;
@@ -40,7 +41,7 @@ public class ProductService implements ProductInterface {
 
     @Override
     public Product getProductById(Long id) {
-        return productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException("Product not found"));
+        return productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product not found"));
     }
 
     private Product createProduct(AddProductRequest request, Category category) {
@@ -57,7 +58,7 @@ public class ProductService implements ProductInterface {
     @Override
     public void deleteProductById(Long id) {
         productRepository.findById(id).ifPresentOrElse(productRepository::delete, () -> {
-            throw new ProductNotFoundException("Product not found");
+            throw new ResourceNotFoundException("Product not found");
         });
     }
 
@@ -66,7 +67,7 @@ public class ProductService implements ProductInterface {
     return productRepository.findById(productId)
             .map(existingProduct ->updateExistingProduct(existingProduct,request))
             .map(productRepository::save)
-            .orElseThrow(()-> new ProductNotFoundException("Product not found"));
+            .orElseThrow(()-> new ResourceNotFoundException("Product not found"));
     }
 
     private Product updateExistingProduct(Product existingProduct , ProductUpdateRequest request){
